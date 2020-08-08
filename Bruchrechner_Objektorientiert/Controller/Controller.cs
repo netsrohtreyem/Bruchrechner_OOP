@@ -43,9 +43,10 @@ namespace Bruchrechner_Objektorientiert
         public void Run()
         {
             bool weiter = true;
-            //1. Splash anzeigen -> UserInterface
+            //1. Splash anzeigen
             this.UI.splash();
 
+            //Hauptschleife
             while (weiter)
             {
                 //2. Menü anzeigen + Menüauswahl einlesen -> UserInterface
@@ -78,71 +79,56 @@ namespace Bruchrechner_Objektorientiert
             }
         }
 
+        #region Geschäftsprozesse
         private void Programmbeenden()
         {
             this.UI.Programmbeenden();
         }
-
         private void BruecheDividieren()
         {
-            Bruch tempBruch = new Bruch();
             //1. Brueche einlesen UserInterface
-            UI.BruchEinlesen(ref tempBruch);
-            this.bruch1.Zuweisung(tempBruch);
-            UI.BruchEinlesen(ref tempBruch);
-            this.bruch2.Zuweisung(tempBruch);
+            this.UI.RechnungEinlesen(bruch1, bruch2, '/');
+
             //2. Rechnung durchführen
             this.ergebnis.Zuweisung(this.bruch1.Dividieren(this.bruch2));
-            //3. Ergebnis anzeigen
-            this.UI.TextAusgeben("Das Ergebnis lautet:");
-            this.UI.BruchAusgeben(ergebnis);
-        }
 
+            //3. Ergebnis anzeigen
+            this.UI.printErgebnis(this.ergebnis);
+        }
         private void BruecheMultiplizieren()
         {
-            Bruch tempBruch = new Bruch();
             //1. Brueche einlesen UserInterface
-            UI.BruchEinlesen(ref tempBruch);
-            this.bruch1.Zuweisung(tempBruch);
-            UI.BruchEinlesen(ref tempBruch);
-            this.bruch2.Zuweisung(tempBruch);
+            this.UI.RechnungEinlesen(bruch1, bruch2, '*');
+
             //2. Rechnung durchführen
             this.ergebnis.Zuweisung(this.bruch1.Multiplizieren(this.bruch2));
-            //3. Ergebnis anzeigen
-            this.UI.TextAusgeben("Das Ergebnis lautet:");
-            this.UI.BruchAusgeben(ergebnis);
-        }
 
+            //3. Ergebnis anzeigen
+            this.UI.printErgebnis(this.ergebnis);
+        }
         private void BruecheSubtrahieren()
         {
-            Bruch tempBruch = new Bruch();
             //1. Brueche einlesen UserInterface
-            UI.BruchEinlesen(ref tempBruch);
-            this.bruch1.Zuweisung(tempBruch);
-            UI.BruchEinlesen(ref tempBruch);
-            this.bruch2.Zuweisung(tempBruch);
+            this.UI.RechnungEinlesen(bruch1, bruch2, '-');
+
             //2. Rechnung durchführen
             this.ergebnis.Zuweisung(this.bruch1.Subtrahieren(this.bruch2));
-            //3. Ergebnis anzeigen
-            this.UI.TextAusgeben("Das Ergebnis lautet:");
-            this.UI.BruchAusgeben(ergebnis);
-        }
 
-        //Geschäftsprozesse
+            //3. Ergebnis anzeigen
+            this.UI.printErgebnis(this.ergebnis);
+        }
         private void BruecheAddieren()
         {
-            Bruch tempBruch = new Bruch();
             //1. Brueche einlesen UserInterface
-            UI.BruchEinlesen(ref tempBruch);
-            this.bruch1.Zuweisung(tempBruch);
-            UI.BruchEinlesen(ref tempBruch);
-            this.bruch2.Zuweisung(tempBruch);
+            this.UI.RechnungEinlesen(bruch1,bruch2, '+');
+
             //2. Rechnung durchführen
             this.ergebnis.Zuweisung(this.bruch1.Addieren(this.bruch2));
+
             //3. Ergebnis anzeigen
-            this.UI.TextAusgeben("Das Ergebnis lautet:");
-            this.UI.BruchAusgeben(ergebnis);
+            this.UI.printErgebnis(this.ergebnis);
         }
+        #endregion
         #endregion
     }
 }

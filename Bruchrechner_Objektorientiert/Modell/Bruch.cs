@@ -35,28 +35,24 @@ namespace Bruchrechner_Objektorientiert
                     if(Zaehler > 0)
                     {
                         Vorzeichen = '-';
-                        _nenner = value * (-1);
                     }
                     else
                     {
-                        Vorzeichen = '+';
-                        _nenner = value * (-1);
-                        Zaehler = Zaehler * (-1);
+                        Vorzeichen = '+';                        
                     }
+                    _nenner = value;
                 }
                 else
                 {
-                    if(Zaehler > 0)
+                    if (Zaehler > 0)
                     {
                         Vorzeichen = '+';
-                        _nenner = value;
                     }
                     else
                     {
                         Vorzeichen = '-';
-                        _nenner = value;
-                        Zaehler = Zaehler * (-1);
                     }
+                    _nenner = value;
                 }
             }
         }
@@ -70,18 +66,13 @@ namespace Bruchrechner_Objektorientiert
         {
             this.Zaehler = 1;
             this.Nenner = 1;
-            //Vorzeichen durch Modifier
         }
         // Spezial Konstruktor
         public Bruch(int zaehler, int nenner)
         {
             this.Zaehler = zaehler;
             this.Nenner = nenner;
-            //Vorzeichen durch Modifier
-            Bruch tempBruch = new Bruch();
-            tempBruch.Zuweisung(this);
-            this.Kuerzen(ref tempBruch);
-            this.Zuweisung(tempBruch);
+            this.Kuerzen();
         }
 
         public Bruch(Bruch value)
@@ -103,32 +94,19 @@ namespace Bruchrechner_Objektorientiert
         {
             int zaehl = 0;
             int nenn = 1;
+            Bruch ergebnis = null;
 
-            #region Vorzeichen
-            if(this.Vorzeichen == '-' && bruch2.Vorzeichen == '-')
-            {
-                zaehl = this.Zaehler*(-1)*bruch2.Nenner + this.Nenner*bruch2.Zaehler*(-1);
-            }
-            else if(this.Vorzeichen == '+' && bruch2.Vorzeichen == '+')
-            {
-                zaehl = this.Zaehler * bruch2.Nenner + this.Nenner * bruch2.Zaehler;
-            }
-            else if(this.Vorzeichen == '-' && bruch2.Vorzeichen == '+')
-            {
-                zaehl = this.Zaehler * (-1) * bruch2.Nenner + this.Nenner * bruch2.Zaehler;
-            }
-            else if (this.Vorzeichen == '+' && bruch2.Vorzeichen == '-')
-            {
-                zaehl = this.Zaehler * bruch2.Nenner + this.Nenner * bruch2.Zaehler*(-1);
-            }
-            else { }
-            #endregion
-
+            zaehl = this.Zaehler * bruch2.Nenner + bruch2.Zaehler * this.Nenner;
             nenn = this.Nenner * bruch2.Nenner;
 
-            Bruch ergebnis = new Bruch(zaehl, nenn);
-            //kuerzen
-            this.Kuerzen(ref ergebnis);
+            try
+            {
+                ergebnis = new Bruch(zaehl, nenn);
+            }
+            catch (Exception ex)
+            {
+                ergebnis = new Bruch(zaehl, 1);
+            }
 
             return ergebnis; 
         } 
@@ -136,31 +114,18 @@ namespace Bruchrechner_Objektorientiert
         {
             int zaehl = 0;
             int nenn = 1;
-            #region Vorzeichen
-            if (this.Vorzeichen == '-' && bruch2.Vorzeichen == '-')
-            {
-                zaehl = this.Zaehler * (-1) * bruch2.Nenner - this.Nenner * bruch2.Zaehler * (-1);
-            }
-            else if (this.Vorzeichen == '+' && bruch2.Vorzeichen == '+')
-            {
-                zaehl = this.Zaehler * bruch2.Nenner - this.Nenner * bruch2.Zaehler;
-            }
-            else if (this.Vorzeichen == '-' && bruch2.Vorzeichen == '+')
-            {
-                zaehl = this.Zaehler * (-1) * bruch2.Nenner - this.Nenner * bruch2.Zaehler;
-            }
-            else if (this.Vorzeichen == '+' && bruch2.Vorzeichen == '-')
-            {
-                zaehl = this.Zaehler * bruch2.Nenner - this.Nenner * bruch2.Zaehler * (-1);
-            }
-            else { }
-            #endregion
+            Bruch ergebnis = null;
 
+            zaehl = this.Zaehler * bruch2.Nenner - bruch2.Zaehler * this.Nenner;
             nenn = this.Nenner * bruch2.Nenner;
-
-            Bruch ergebnis = new Bruch(zaehl, nenn);
-            //kuerzen
-            this.Kuerzen(ref ergebnis);
+            try
+            {
+                ergebnis = new Bruch(zaehl, nenn);
+            }
+            catch (Exception ex)
+            {
+                ergebnis = new Bruch(zaehl, 1);
+            }
 
             return ergebnis;
         }
@@ -168,31 +133,19 @@ namespace Bruchrechner_Objektorientiert
         {
             int zaehl = 0;
             int nenn = 1;
-            #region Vorzeichen
-            if (this.Vorzeichen == '-' && bruch2.Vorzeichen == '-')
-            {
-                zaehl = this.Zaehler * (-1) * bruch2.Zaehler * (-1);
-            }
-            else if (this.Vorzeichen == '+' && bruch2.Vorzeichen == '+')
-            {
-                zaehl = this.Zaehler * bruch2.Zaehler;
-            }
-            else if (this.Vorzeichen == '-' && bruch2.Vorzeichen == '+')
-            {
-                zaehl = this.Zaehler * (-1) * bruch2.Zaehler;
-            }
-            else if (this.Vorzeichen == '+' && bruch2.Vorzeichen == '-')
-            {
-                zaehl = this.Zaehler * bruch2.Zaehler * (-1);
-            }
-            else { }
-            #endregion
+            Bruch ergebnis = null;
 
+            zaehl = this.Zaehler * bruch2.Zaehler;
             nenn = this.Nenner * bruch2.Nenner;
 
-            Bruch ergebnis = new Bruch(zaehl, nenn);
-            //kuerzen
-            this.Kuerzen(ref ergebnis);
+            try
+            {
+                ergebnis = new Bruch(zaehl, nenn);
+            }
+            catch (Exception ex)
+            {
+                ergebnis = new Bruch(zaehl, 1);
+            }
 
             return ergebnis;
         }
@@ -200,39 +153,24 @@ namespace Bruchrechner_Objektorientiert
         {
             int zaehl = 0;
             int nenn = 1;
-            #region Vorzeichen
-            if (this.Vorzeichen == '-')
-            {
-                zaehl = this.Zaehler * (-1) * bruch2.Nenner;
-            }
-            else if (this.Vorzeichen == '+')
-            {
-                zaehl = this.Zaehler * bruch2.Nenner;
-            }
-            else
-            { }
+            Bruch ergebnis=null;
 
-            if (bruch2.Vorzeichen == '+')
+            zaehl = this.Zaehler * bruch2.Nenner;
+            nenn = bruch2.Zaehler * this.Nenner;
+            try
             {
-                nenn = this.Nenner * bruch2.Zaehler;
+              ergebnis = new Bruch(zaehl, nenn);
             }
-            else if (bruch2.Vorzeichen == '-')
+            catch(Exception ex)
             {
-                nenn = this.Nenner * bruch2.Zaehler * (-1);
+              ergebnis = new Bruch(zaehl, 1);
             }
-            else { }
-            #endregion
-
-            Bruch ergebnis = new Bruch(zaehl, nenn);
-            //kuerzen
-            this.Kuerzen(ref ergebnis);
-
             return ergebnis;
         }
-        private void Kuerzen(ref Bruch ergebnis)
+        private void Kuerzen()
         {
-            int tmpz = ergebnis.Zaehler;
-            int tmpn = ergebnis.Nenner;
+            int tmpz = this.Zaehler;
+            int tmpn = this.Nenner;
 
             if (tmpz != 0)
             {
@@ -254,10 +192,10 @@ namespace Bruchrechner_Objektorientiert
             {
                 //nichts
             }
-            char tempvorzeichen = ergebnis.Vorzeichen;
-            ergebnis.Zaehler = tmpz;
-            ergebnis.Nenner = tmpn;
-            ergebnis.Vorzeichen = tempvorzeichen;
+            char tempvorzeichen = this.Vorzeichen;
+            this.Zaehler = tmpz;
+            this.Nenner = tmpn;
+            this.Vorzeichen = tempvorzeichen;
         }
         #endregion
     }
