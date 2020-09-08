@@ -169,32 +169,33 @@ namespace Bruchrechner_Objektorientiert
         }
         private void Kuerzen()
         {
+            //Euklidischer Algorithmus
             int tmpz = this.Zaehler;
             int tmpn = this.Nenner;
+            char tempvorzeichen = this.Vorzeichen;
 
             if (tmpz != 0)
             {
                 int rest;
-                int ggt = Math.Abs(tmpz);
-                int divisor = Math.Abs(tmpn);
+                int ggt = Math.Abs(tmpz); //Absoluter Wert ohne Vorzeichen
+                int divisor = Math.Abs(tmpn);//Absoluter Wert ohne Vorzeichen
 
                 do
                 {
                     rest = ggt % divisor;
                     ggt = divisor;
                     divisor = rest;
-                } while (rest > 0);
+                } while (rest > 0); //Solange bis kleinster gemeinsamer Teiler gefunden wurde
 
-                tmpz = tmpz / ggt;
-                tmpn = tmpn / ggt;
+                //dann kürzen
+                this.Zaehler = tmpz / ggt;
+                this.Nenner = tmpn / ggt;
             }
             else
             {
                 //nichts
             }
-            char tempvorzeichen = this.Vorzeichen;
-            this.Zaehler = tmpz;
-            this.Nenner = tmpn;
+            
             this.Vorzeichen = tempvorzeichen;
         }
         #endregion
